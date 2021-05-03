@@ -7,79 +7,32 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function employee(Request $request)
     {
-        //
+
+        $employee = Employee::firstOrCreate([
+            'branch_id' => $request->get('branch_id'),
+            'user_id' => $request->get('user_id'),
+        ]);
+        return response()->json($employee);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getEmployee()
     {
-        //
+        $employeeList = Employee::all();
+        return response()->json(compact('employeeList'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getEmpBranchWise($id)
     {
-        //
+        $employeeList = Employee::where('branch_id', $id)->get();
+        return response()->json(compact('employeeList'));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Employee $employee)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Employee $employee)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Employee $employee)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Employee $employee)
-    {
-        //
+        //  return 'fhdishfdoshfds';
+        $employee = Employee::findOrFail($id);
+        $employee->delete();
+        return response()->json($employee);
     }
 }

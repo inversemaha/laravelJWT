@@ -15,7 +15,7 @@ class CreateBranchManagersTable extends Migration
     {
         Schema::create('branch_managers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('branch_id')->unique();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->foreign('branch_id')->references('id')->on('branches');

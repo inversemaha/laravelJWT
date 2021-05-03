@@ -7,79 +7,24 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function branch(Request $request)
     {
-        //
+        $branch = Branch::create([
+            'branch_name' => $request->get('branch_name'),
+        ]);
+        return response()->json($branch);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getBranch()
     {
-        //
+        $branchList = Branch::all();
+        return response()->json(compact('branchList'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function destroy($id)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Branch $branch)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Branch  $branch
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Branch $branch)
-    {
-        //
+        $branch = Branch::findOrFail($id);
+        $branch->delete();
+        return response()->json($branch);
     }
 }
