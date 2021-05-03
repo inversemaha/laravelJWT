@@ -23,7 +23,7 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'authenticate']);
 Route::get('/userlist', [UserController::class, 'getUser']);
 Route::get('/edit/{id}', [UserController::class, 'edit']);
-Route::post('/update', [UserController::class, 'update']);
+Route::post('/update/{id}', [UserController::class, 'update']);
 Route::delete('/delete/{id}', [UserController::class, 'destroy']);
 
 Route::group(['middleware' => ['jwt.verify']], function() {
